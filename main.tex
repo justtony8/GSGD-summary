@@ -59,9 +59,11 @@
 
 \newcommand{\stat}[3]{%
   \begin{minipage}[t]{#1}
+    \raggedright
     {\color{GSGDRed}\rule{\linewidth}{0.8pt}}\\[0.13cm]
-    {\bfseries\LARGE #2}\\[-0.02cm]
-    {\sffamily\scriptsize\color{GSGDMuted}#3}
+    {\bfseries\LARGE #2}\par
+    \vspace{0.03cm}
+    {\sffamily\scriptsize\color{GSGDMuted}#3\par}
   \end{minipage}%
 }
 
@@ -89,7 +91,7 @@
   \stat{2.60cm}{60,538}{gauge metadata records}\hspace{0.35cm}
   \stat{2.60cm}{51,633}{matched time-series files}\hspace{0.35cm}
   \stat{2.60cm}{159}{countries and regions}\hspace{0.35cm}
-  \stat{2.60cm}{34}{contributing sources}
+  \stat{2.60cm}{34}{contributing data sources}
 
   \vspace{0.75cm}
   \begin{minipage}{0.89\textwidth}
@@ -103,31 +105,28 @@
 
 % 3
 \begin{frame}{GSGD nearly doubles the metadata coverage reported by GSIM}
-  \vspace*{0.35cm}
-  \begin{columns}[c,onlytextwidth]
-    \column{0.58\textwidth}
-      \begin{tikzpicture}[x=0.000105cm,y=1cm]
-        \draw[gray!45] (0,0) -- (65000,0);
-        \fill[GSGDMuted] (0,0.35) rectangle (30959,1.12);
-        \fill[GSGDRed] (0,1.65) rectangle (60538,2.42);
-        \node[anchor=east,font=\sffamily\small] at (-1200,0.73) {GSIM};
-        \node[anchor=east,font=\sffamily\small] at (-1200,2.03) {GSGD};
-        \node[anchor=west,font=\bfseries\large] at (31800,0.73) {30,959};
-        \node[anchor=west,font=\bfseries\large,text=GSGDRed] at (61400,2.03) {60,538};
-      \end{tikzpicture}
-    \column{0.35\textwidth}
-      {\sffamily\scriptsize\color{GSGDMuted}DIFFERENCE}\par
-      {\bfseries\Huge\color{GSGDRed}+29,579}\par
-      {\large metadata records}\par
-      \vspace{0.28cm}
-      {\sffamily\small about 96\% more than the GSIM country total}
-  \end{columns}
+  \vspace*{0.24cm}
+  \centering
+  \begin{tikzpicture}[x=0.000145cm,y=1cm]
+    \draw[gray!40] (0,0) -- (65000,0);
+    \fill[GSGDMuted] (0,0.30) rectangle (30959,1.03);
+    \fill[GSGDRed] (0,1.52) rectangle (60538,2.25);
+    \node[anchor=east,font=\sffamily\small] at (-1100,0.66) {GSIM};
+    \node[anchor=east,font=\sffamily\small] at (-1100,1.88) {GSGD};
+    \node[anchor=west,font=\bfseries\large] at (31700,0.66) {30,959};
+    \node[anchor=east,font=\bfseries\large,text=white] at (59400,1.88) {60,538};
+  \end{tikzpicture}
 
-  \vspace{0.48cm}
-  \small
-  This is a coverage comparison, not a claim that every source is freely
-  redistributable. GSGD chooses the strongest available station inventory country by
-  country; alternative catalogues remain visible but are not added to the selected total.
+  \vspace{0.34cm}
+  {\bfseries\Large\color{GSGDRed}GSGD adds 29,579 metadata records, a 95.5\% increase.}\par
+
+  \vspace{0.42cm}
+  \begin{minipage}{0.90\textwidth}
+    \small
+    This is a coverage comparison, not a claim that every source is freely
+    redistributable. GSGD selects one primary station inventory for each country;
+    alternative catalogues remain visible but are not added to the selected total.
+  \end{minipage}
 \end{frame}
 
 % 4
@@ -196,9 +195,10 @@
 
 % 6
 \begin{frame}{Station type is decided from source evidence first}
-  \vspace*{0.18cm}
-  \small
-  \begin{tabularx}{\linewidth}{@{}>{\centering\arraybackslash}p{0.9cm}p{4.6cm}X@{}}
+  \vspace*{0.04cm}
+  \footnotesize
+  \renewcommand{\arraystretch}{0.94}
+  \begin{tabularx}{\linewidth}{@{}>{\centering\arraybackslash}p{0.75cm}p{4.45cm}X@{}}
     \toprule
     Priority & Evidence & How it is used \\
     \midrule
@@ -210,17 +210,13 @@
     \bottomrule
   \end{tabularx}
 
-  \vspace{0.42cm}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.48\textwidth}
-      {\sffamily\bfseries\small\color{GSGDRed}What spatial evidence can do}\par
-      \small Support a probable-river interpretation and identify records that need
-      closer source or manual assessment.
-    \column{0.48\textwidth}
-      {\sffamily\bfseries\small\color{GSGDRed}What it cannot do}\par
-      \small A missing nearby river does not automatically make a station non-river,
-      and spatial evidence does not overwrite an authoritative agency class.
-  \end{columns}
+  \vspace{0.26cm}
+  {\color{GSGDRed}\rule{\linewidth}{0.7pt}}\par
+  \vspace{0.12cm}
+  \small
+  \textbf{Spatial evidence supports assessment; it does not make the final decision.}
+  Agreement can support \texttt{probable\_river}. A spatial mismatch sends the record
+  to review and never overrides an authoritative agency classification.
 \end{frame}
 
 % 7
@@ -244,21 +240,24 @@
       \end{tabular}
     \column{0.44\textwidth}
       \vspace{0.10cm}
-      {\sffamily\scriptsize\color{GSGDMuted}FLAGGED NON-RIVER RECORDS}\par
-      {\bfseries\Huge 525}\par
-      \vspace{0.22cm}
-      {\bfseries\Large 521} \small have matched station-level time series\par
-      \vspace{0.22cm}
-      {\bfseries\Large 4} \small AFD canal records are metadata-only because no
-      local daily station CSV is available
+      \small
+      \begin{tabularx}{\linewidth}{@{}>{\bfseries}p{0.72cm}X@{}}
+        \toprule
+        525 & flagged non-river records retained in the metadata \\
+        521 & records with matched station-level time series \\
+        4 & AFD canal records retained as metadata-only because no local daily
+        station CSV is available \\
+        \bottomrule
+      \end{tabularx}
   \end{columns}
 \end{frame}
 
 % 8
 \begin{frame}{The current product links 51,633 gauges to time series}
-  \vspace*{0.35cm}
-  \begin{columns}[c,onlytextwidth]
+  \vspace*{0.02cm}
+  \begin{columns}[T,onlytextwidth]
     \column{0.38\textwidth}
+      \vspace{0pt}
       {\sffamily\scriptsize\color{GSGDMuted}TIME-SERIES INVENTORY}\par
       {\bfseries\Huge\color{GSGDRed}51,633}\par
       \vspace{0.16cm}
@@ -266,6 +265,7 @@
       \vspace{0.40cm}
       {\bfseries\Large 33} countries currently contribute held series
     \column{0.56\textwidth}
+      \vspace{0pt}
       \small
       \begin{itemize}
         \item Metadata and physical station files are matched by persistent gauge code.
@@ -277,7 +277,7 @@
       \end{itemize}
   \end{columns}
 
-  \vspace{0.40cm}
+  \vspace{0.24cm}
   \centering
   \begin{minipage}{0.88\textwidth}
     \small\bfseries
