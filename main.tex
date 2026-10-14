@@ -1,14 +1,290 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+% GSGD ten-minute summary. Compiles with Overleaf's default pdfLaTeX engine.
+\documentclass[t,aspectratio=169,10pt]{beamer}
 
-\title{GSGD summary}
+\usetheme[numbering=fraction,progressbar=none]{metropolis}
+\metroset{block=transparent,sectionpage=none}
+\usefonttheme{professionalfonts}
+\usepackage{tgpagella}
+\usepackage[scaled=0.95]{tgheros}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\definecolor{GSGDInk}{HTML}{1B1B1B}
+\definecolor{GSGDMuted}{HTML}{666666}
+\definecolor{GSGDRed}{HTML}{A6192E}
+\definecolor{GSGDBlue}{HTML}{327DAF}
+\definecolor{GSGDGreen}{HTML}{4C956C}
+\definecolor{GSGDGold}{HTML}{D9A441}
+\definecolor{GSGDPurple}{HTML}{7C6FB0}
+\definecolor{GSGDOrange}{HTML}{D97706}
+\definecolor{GSGDCyan}{HTML}{0891B2}
+\definecolor{GSGDBrown}{HTML}{7C5C3B}
+\definecolor{GSGDLight}{HTML}{F2F2F2}
+\definecolor{IlliniOrange}{HTML}{FF5F05}
+\definecolor{IlliniBlue}{HTML}{13294B}
+
+\setbeamercolor{normal text}{fg=GSGDInk,bg=white}
+\setbeamercolor{frametitle}{fg=GSGDInk,bg=white}
+\setbeamercolor{title separator}{fg=GSGDRed}
+\setbeamercolor{alerted text}{fg=GSGDRed}
+\setbeamerfont{title}{family=\rmfamily,series=\bfseries,size=\LARGE}
+\setbeamerfont{frametitle}{family=\rmfamily,series=\bfseries,size=\Large}
+\setbeamerfont{footline}{family=\sffamily,size=\scriptsize}
+\setbeamertemplate{itemize item}{\raise0.2ex\hbox{\color{GSGDRed}\rule{0.45ex}{0.45ex}}}
+
+\makeatletter
+\setlength{\metropolis@frametitle@padding}{0.55cm}
+\makeatother
+
+\setbeamercolor{institution in head/foot}{fg=IlliniBlue,bg=white}
+\setbeamercolor{page number in head/foot}{fg=black,bg=white}
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=0.82\paperwidth,ht=0.34cm,dp=0.10cm,leftskip=0.35cm]{institution in head/foot}%
+      \raisebox{-0.045cm}{\includegraphics[height=0.24cm]{figures/uiuc-block-i.png}}%
+      \hspace{0.11cm}{\sffamily\tiny University of Illinois Urbana-Champaign}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.18\paperwidth,ht=0.34cm,dp=0.10cm,right,rightskip=0.35cm]{page number in head/foot}%
+      {\sffamily\tiny\insertframenumber/\inserttotalframenumber}%
+    \end{beamercolorbox}%
+  }%
+  \vskip0.18cm%
+}
+
+\newcommand{\stat}[3]{%
+  \begin{minipage}[t]{#1}
+    {\color{GSGDRed}\rule{\linewidth}{0.8pt}}\\[0.13cm]
+    {\bfseries\LARGE #2}\\[-0.02cm]
+    {\sffamily\scriptsize\color{GSGDMuted}#3}
+  \end{minipage}%
+}
+
+\newcommand{\swatch}[2]{%
+  \tikz[baseline=-0.5ex]\fill[#1] (0,0) rectangle (0.22,0.22);\hspace{0.08cm}#2%
+}
+
+\title{GSGD in context}
+\subtitle{Coverage beyond GSIM, station-type assessment, and the current time-series product}
 \author{Jinghao Meng}
-\date{October 2026}
+\institute{University of Illinois Urbana-Champaign}
+\date{14 October 2026}
 
 \begin{document}
 
-\maketitle
+% 1
+\begin{frame}[c]
+  \titlepage
+\end{frame}
 
-\section{Introduction}
+% 2
+\begin{frame}{What is in the current GSGD release?}
+  \vspace*{0.40cm}
+  \centering
+  \stat{2.60cm}{60,538}{gauge metadata records}\hspace{0.35cm}
+  \stat{2.60cm}{51,633}{matched time-series files}\hspace{0.35cm}
+  \stat{2.60cm}{159}{countries and regions}\hspace{0.35cm}
+  \stat{2.60cm}{34}{contributing sources}
+
+  \vspace{0.75cm}
+  \begin{minipage}{0.89\textwidth}
+    \small
+    GSGD links harmonized station metadata to traceable gauge-level observations
+    collected from national agencies, APIs, research archives, and global catalogues.
+    The gauge is the unit of organization: every retained record keeps a persistent
+    identifier, source provenance, station-type status, and file relationship.
+  \end{minipage}
+\end{frame}
+
+% 3
+\begin{frame}{GSGD nearly doubles the metadata coverage reported by GSIM}
+  \vspace*{0.35cm}
+  \begin{columns}[c,onlytextwidth]
+    \column{0.58\textwidth}
+      \begin{tikzpicture}[x=0.000105cm,y=1cm]
+        \draw[gray!45] (0,0) -- (65000,0);
+        \fill[GSGDMuted] (0,0.35) rectangle (30959,1.12);
+        \fill[GSGDRed] (0,1.65) rectangle (60538,2.42);
+        \node[anchor=east,font=\sffamily\small] at (-1200,0.73) {GSIM};
+        \node[anchor=east,font=\sffamily\small] at (-1200,2.03) {GSGD};
+        \node[anchor=west,font=\bfseries\large] at (31800,0.73) {30,959};
+        \node[anchor=west,font=\bfseries\large,text=GSGDRed] at (61400,2.03) {60,538};
+      \end{tikzpicture}
+    \column{0.35\textwidth}
+      {\sffamily\scriptsize\color{GSGDMuted}DIFFERENCE}\par
+      {\bfseries\Huge\color{GSGDRed}+29,579}\par
+      {\large metadata records}\par
+      \vspace{0.28cm}
+      {\sffamily\small about 96\% more than the GSIM country total}
+  \end{columns}
+
+  \vspace{0.48cm}
+  \small
+  This is a coverage comparison, not a claim that every source is freely
+  redistributable. GSGD chooses the strongest available station inventory country by
+  country; alternative catalogues remain visible but are not added to the selected total.
+\end{frame}
+
+% 4
+\begin{frame}{The largest gains come from updated national sources}
+  \vspace*{0.30cm}
+  \centering
+  \small
+  \begin{tabularx}{0.91\textwidth}{@{}l>{\raggedleft\arraybackslash}p{2.0cm}>{\raggedleft\arraybackslash}p{2.0cm}>{\raggedleft\arraybackslash}p{2.0cm}@{}}
+    \toprule
+    Country & GSIM & GSGD metadata & Difference \\
+    \midrule
+    United States & 9,425 & 16,902 & \textcolor{GSGDRed}{+7,477} \\
+    Australia & 2,941 & 6,612 & \textcolor{GSGDRed}{+3,671} \\
+    France & 1,354 & 4,834 & \textcolor{GSGDRed}{+3,480} \\
+    United Kingdom & 242 & 1,601 & \textcolor{GSGDRed}{+1,359} \\
+    Mexico & 56 & 1,173 & \textcolor{GSGDRed}{+1,117} \\
+    Poland & 71 & 1,100 & \textcolor{GSGDRed}{+1,029} \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.45cm}
+  \begin{minipage}{0.91\textwidth}
+    \small
+    The difference reflects newer and broader national catalogues, not the sum of
+    overlapping databases. Germany is a useful counterexample: the current selected
+    GSGD inventory has 526 gauges versus 829 in GSIM, because GSGD applies its present
+    source and file-availability rules consistently.
+  \end{minipage}
+\end{frame}
+
+% 5
+\begin{frame}{A gauge record does not always represent a river station}
+  \vspace*{0.62cm}
+  \begin{columns}[c,totalwidth=0.94\textwidth]
+    \column{0.23\textwidth}
+      \centering
+      {\sffamily\scriptsize\color{GSGDMuted}CONFIRMED RIVER}\par
+      {\bfseries\Huge 28,074}\par
+      \small explicit source evidence
+    \column{0.23\textwidth}
+      \centering
+      {\sffamily\scriptsize\color{GSGDMuted}PROBABLE RIVER}\par
+      {\bfseries\Huge 31,559}\par
+      \small consistent supporting evidence
+    \column{0.20\textwidth}
+      \centering
+      {\sffamily\scriptsize\color{GSGDMuted}REVIEW REQUIRED}\par
+      {\bfseries\Huge\color{GSGDGold}380}\par
+      \small evidence remains uncertain
+    \column{0.20\textwidth}
+      \centering
+      {\sffamily\scriptsize\color{GSGDMuted}NON-RIVER}\par
+      {\bfseries\Huge\color{GSGDRed}525}\par
+      \small facility type identified
+  \end{columns}
+
+  \vspace{0.78cm}
+  \centering
+  \begin{minipage}{0.88\textwidth}
+    \small
+    \texttt{review\_required} means the available evidence is incomplete or conflicting.
+    \texttt{non\_river} means the source or documented assessment identifies a canal,
+    reservoir, groundwater well, spring, diversion, or another non-river facility.
+  \end{minipage}
+\end{frame}
+
+% 6
+\begin{frame}{Station type is decided from source evidence first}
+  \vspace*{0.18cm}
+  \small
+  \begin{tabularx}{\linewidth}{@{}>{\centering\arraybackslash}p{0.9cm}p{4.6cm}X@{}}
+    \toprule
+    Priority & Evidence & How it is used \\
+    \midrule
+    1 & Official station type or measured parameter & authoritative classification \\
+    2 & Station name, river name, and description & identify natural and engineered facilities \\
+    3 & Source-specific catalogue definitions & interpret agency codes in their own context \\
+    4 & HarP river network within 1 km & primary spatial support for ambiguous records \\
+    5 & MERIT Hydro and JRC surface water & fallback drainage and surface-water context \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.42cm}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+      {\sffamily\bfseries\small\color{GSGDRed}What spatial evidence can do}\par
+      \small Support a probable-river interpretation and identify records that need
+      closer source or manual assessment.
+    \column{0.48\textwidth}
+      {\sffamily\bfseries\small\color{GSGDRed}What it cannot do}\par
+      \small A missing nearby river does not automatically make a station non-river,
+      and spatial evidence does not overwrite an authoritative agency class.
+  \end{columns}
+\end{frame}
+
+% 7
+\begin{frame}{Non-river records remain visible and traceable}
+  \vspace*{0.28cm}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.50\textwidth}
+      \small
+      Each flagged record retains:
+      \begin{itemize}
+        \item its original gauge identifier and source text;
+        \item a facility category and consistent highlight colour;
+        \item the evidence used for the classification;
+        \item an explanatory note rather than silent deletion.
+      \end{itemize}
+      \vspace{0.22cm}
+      \begin{tabular}{@{}ll@{}}
+        \swatch{GSGDOrange}{Canal} & \swatch{GSGDPurple}{Reservoir} \\
+        \swatch{GSGDCyan}{Spring} & \swatch{GSGDBrown}{Groundwater} \\
+        \swatch{GSGDRed}{Diversion} & \swatch{GSGDMuted}{Other facility} \\
+      \end{tabular}
+    \column{0.44\textwidth}
+      \vspace{0.10cm}
+      {\sffamily\scriptsize\color{GSGDMuted}FLAGGED NON-RIVER RECORDS}\par
+      {\bfseries\Huge 525}\par
+      \vspace{0.22cm}
+      {\bfseries\Large 521} \small have matched station-level time series\par
+      \vspace{0.22cm}
+      {\bfseries\Large 4} \small AFD canal records are metadata-only because no
+      local daily station CSV is available
+  \end{columns}
+\end{frame}
+
+% 8
+\begin{frame}{The current product links 51,633 gauges to time series}
+  \vspace*{0.35cm}
+  \begin{columns}[c,onlytextwidth]
+    \column{0.38\textwidth}
+      {\sffamily\scriptsize\color{GSGDMuted}TIME-SERIES INVENTORY}\par
+      {\bfseries\Huge\color{GSGDRed}51,633}\par
+      \vspace{0.16cm}
+      {\large 85.3\% of all metadata records}\par
+      \vspace{0.40cm}
+      {\bfseries\Large 33} countries currently contribute held series
+    \column{0.56\textwidth}
+      \small
+      \begin{itemize}
+        \item Metadata and physical station files are matched by persistent gauge code.
+        \item Every packaged file has start and end dates; no metadata path is missing
+          its file, and no physical file lacks metadata.
+        \item The 521 matched non-river series are retained with their facility flags.
+        \item GRDC/EWA observations and other licence-restricted holdings are treated
+          according to source-specific redistribution conditions.
+      \end{itemize}
+  \end{columns}
+
+  \vspace{0.40cm}
+  \centering
+  \begin{minipage}{0.88\textwidth}
+    \small\bfseries
+    The practical result is one traceable product: broader coverage than GSIM,
+    explicit station-type uncertainty, and a one-to-one link from metadata to each
+    held time-series file.
+  \end{minipage}
+\end{frame}
 
 \end{document}
